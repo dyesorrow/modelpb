@@ -1,0 +1,90 @@
+syntax = "proto2";
+
+package model;
+option optimize_for = LITE_RUNTIME;
+
+
+message Node {
+    optional string name = 1;
+    repeated float transformation = 2;
+    repeated int32 meshes = 3;
+    repeated Node children = 4;
+}
+
+message Meshes {
+
+    message TexturecoordsEntry {
+        repeated float data = 1;
+    }
+
+    message BonesWeight {
+        repeated int32 data = 1;
+    }
+
+    message BonesEntry {
+        optional string name = 1;
+        repeated float offsetmatrix = 2;
+        repeated BonesWeight weights = 3;
+    }
+
+    message FaceEntry {
+        repeated int32 data = 1;
+    }
+
+    optional string name = 1;
+    optional int32 materialindex = 2; 
+    optional int32 primitivetypes = 3;
+    repeated float vertices = 4;
+    repeated float normals = 5;
+    repeated int32 numuvcomponents = 6;
+    repeated TexturecoordsEntry texturecoords = 7;
+    repeated BonesEntry bones = 8;
+    repeated FaceEntry faces = 9;
+}
+
+message Materials {
+
+    message PropertyEntry {
+        optional string key = 1;
+        optional int32 semantic = 2;
+        optional int32 index = 3;
+        optional int32 type = 4;
+
+        repeated float farray = 5;
+        optional float fvalue = 7;
+        optional string svalue = 9;
+    }
+
+    repeated PropertyEntry properties = 1;
+}
+
+message Animations {
+
+    message keys {
+        optional int32 val1 = 1;
+        repeated float val2 = 2;
+    }
+
+    message Channel {
+        optional string name = 1;
+        optional int32 prestate = 2;
+        optional int32 poststate = 3;
+        repeated keys positionkeys = 4;
+        repeated keys rotationkeys = 5;
+        repeated keys scalingkeys = 6;
+    }
+
+    optional string name = 1;
+    optional int32 tickspersecond = 2;
+    optional int32 duration = 3;
+    repeated Channel channels = 4;
+
+}
+
+message Model {
+    optional Node rootnode = 1;
+    optional int32 flags = 2;
+    repeated Meshes meshes = 3;
+    repeated Materials materials = 4;
+    repeated Animations animations = 5;
+}
