@@ -7,11 +7,11 @@ cd your model dir, edit model.config
 
 ```json
 {
-    inputs: {
+    "inputs": {
         "name": "path",
         ...
     },
-    outfile: "path"
+    "outfile": "path"
 }
 ```
 then do
